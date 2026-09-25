@@ -18,7 +18,7 @@ interface AlertRepository {
 
 class AlertRepositoryImpl(
     private val dataStore: ProfileDataStore? = null,
-    private var fallbackUrl: String = "http://192.168.18.167:4000"
+    private var fallbackUrl: String = "https://alerta-guadalupe.vercel.app"
 ) : AlertRepository {
 
     private val gson = Gson()

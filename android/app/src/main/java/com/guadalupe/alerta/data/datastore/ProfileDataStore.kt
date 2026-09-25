@@ -21,7 +21,7 @@ class ProfileDataStore(private val context: Context) {
         val KEY_AGE = intPreferencesKey("citizen_age")
         val KEY_PHONE = stringPreferencesKey("citizen_phone")
         val KEY_SERVER_IP = stringPreferencesKey("server_ip")
-        const val DEFAULT_SERVER_IP = "192.168.18.167:4000"
+        const val DEFAULT_SERVER_IP = "https://alerta-guadalupe.vercel.app"
     }
 
     /**

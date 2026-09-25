@@ -74,10 +74,17 @@ fun ReportDashboardScreen(
                         modifier = Modifier.fillMaxWidth()
                     )
                     Text("Accesos directos:", color = TextSecondary, fontSize = 12.sp)
-                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        SuggestionChip(
+                            onClick = { tempIp = "https://alerta-guadalupe.vercel.app" },
+                            label = { Text("Vercel Nube", fontSize = 11.sp) }
+                        )
                         SuggestionChip(
                             onClick = { tempIp = "192.168.18.167:4000" },
-                            label = { Text("Wi-Fi PC", fontSize = 11.sp) }
+                            label = { Text("Wi-Fi Local", fontSize = 11.sp) }
                         )
                         SuggestionChip(
                             onClick = { tempIp = "10.0.2.2:4000" },

@@ -1,0 +1,16 @@
+{
+  "name": "alerta-guadalupe-cloud",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Plataforma de Seguridad Ciudadana Guadalupe para Vercel y Supabase Cloud",
+  "scripts": {
+    "build": "cd web && npm run build",
+    "dev:web": "cd web && npm run dev",
+    "dev:server": "cd server && npm start",
+    "lint": "cd web && npm run lint"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.49.1",
+    "cors": "^2.8.5"
+  }
+}

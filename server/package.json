@@ -1,0 +1,15 @@
+{
+  "name": "alerta-guadalupe-server",
+  "version": "1.0.0",
+  "description": "Backend de Ingesta y Distribución de Alertas Vecinales para Guadalupe",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.117.1",
+    "cors": "^2.8.5",
+    "dotenv": "^18.0.3",
+    "express": "^4.21.2"
+  }
+}

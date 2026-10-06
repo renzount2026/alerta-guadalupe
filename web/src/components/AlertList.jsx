@@ -23,6 +23,13 @@ export default function AlertList({
 }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [typeFilter, setTypeFilter] = useState('ALL');
+  const [, setTick] = useState(0);
+
+  // Live timer tick every 10 seconds to update relative times ("Hace un momento", "Hace 2 min")
+  React.useEffect(() => {
+    const timer = setInterval(() => setTick(t => t + 1), 10000);
+    return () => clearInterval(timer);
+  }, []);
 
   const filteredAlerts = alerts.filter(alert => {
     // Type filter
@@ -60,10 +67,12 @@ export default function AlertList({
   const formatTime = (isoString) => {
     try {
       const date = new Date(isoString);
-      const minutesAgo = Math.floor((Date.now() - date.getTime()) / 60000);
-      if (minutesAgo < 1) return 'Hace un momento';
-      if (minutesAgo < 60) return `Hace ${minutesAgo} min`;
-      return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      const diffMs = Date.now() - date.getTime();
+      const minutesAgo = Math.floor(diffMs / 60000);
+      const timeStr = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      if (minutesAgo < 1) return `Hace un momento (${timeStr})`;
+      if (minutesAgo < 60) return `Hace ${minutesAgo} min (${timeStr})`;
+      return `${date.toLocaleDateString([], { day: '2-digit', month: '2-digit' })} ${timeStr}`;
     } catch (e) {
       return isoString;
     }

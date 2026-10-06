@@ -38,6 +38,37 @@ const createAlertIcon = (alertType) => {
   });
 };
 
+// Tactical Quadrant Code Badge (C-01, C-02, etc.)
+const createQuadrantLabelIcon = (id, color, isSelected) => {
+  return L.divIcon({
+    className: 'quadrant-center-badge',
+    html: `
+      <div style="
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2px 7px;
+        border-radius: 6px;
+        background: ${isSelected ? 'rgba(14, 165, 233, 0.95)' : 'rgba(10, 18, 32, 0.82)'};
+        color: ${isSelected ? '#030712' : '#F1F5F9'};
+        border: 1.5px solid ${isSelected ? '#38BDF8' : color};
+        font-size: 11px;
+        font-weight: 800;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        letter-spacing: 0.5px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+        pointer-events: none;
+        white-space: nowrap;
+        user-select: none;
+      ">
+        ${id}
+      </div>
+    `,
+    iconSize: [44, 22],
+    iconAnchor: [22, 11]
+  });
+};
+
 // Map controller to focus on selected alert or quadrant
 function MapController({ selectedAlert, selectedQuadrant }) {
   const map = useMap();
@@ -88,24 +119,34 @@ export default function MapView({
         {QUADRANTS.map((quadrant) => {
           const isSelected = selectedQuadrant === quadrant.id;
           return (
-            <Polygon
-              key={quadrant.id}
-              positions={quadrant.bounds}
-              pathOptions={{
-                color: isSelected ? '#38BDF8' : quadrant.color,
-                fillColor: quadrant.color,
-                fillOpacity: isSelected ? 0.35 : 0.15,
-                weight: isSelected ? 3 : 1.5,
-                dashArray: isSelected ? '4, 4' : undefined
-              }}
-              eventHandlers={{
-                click: () => onSelectQuadrant(isSelected ? null : quadrant.id)
-              }}
-            >
-              <Tooltip sticky direction="center" className="quadrant-tooltip">
-                <div className="font-bold text-xs">{quadrant.id}: {quadrant.name}</div>
-              </Tooltip>
-            </Polygon>
+            <React.Fragment key={quadrant.id}>
+              <Polygon
+                positions={quadrant.bounds}
+                pathOptions={{
+                  color: isSelected ? '#38BDF8' : quadrant.color,
+                  fillColor: quadrant.color,
+                  fillOpacity: isSelected ? 0.35 : 0.12,
+                  weight: isSelected ? 2.5 : 1.5,
+                  dashArray: isSelected ? '4, 4' : undefined
+                }}
+                eventHandlers={{
+                  click: () => onSelectQuadrant(isSelected ? null : quadrant.id)
+                }}
+              >
+                <Tooltip sticky direction="center" className="quadrant-tooltip">
+                  <div className="font-bold text-xs">{quadrant.id}: {quadrant.name}</div>
+                  <div className="text-[10px] text-slate-300 max-w-[200px] mt-0.5">{quadrant.description}</div>
+                </Tooltip>
+              </Polygon>
+
+              {/* Tactical Chip Marker at quadrant center */}
+              <Marker
+                position={quadrant.center}
+                icon={createQuadrantLabelIcon(quadrant.id, quadrant.color, isSelected)}
+                interactive={false}
+                zIndexOffset={100}
+              />
+            </React.Fragment>
           );
         })}
 

@@ -62,3 +62,9 @@ body {
   border-color: rgba(14, 26, 46, 0.95) !important;
 }
 
+/* Quadrant Tactical Center Badge */
+.quadrant-center-badge {
+  background: transparent !important;
+  border: none !important;
+}
+
